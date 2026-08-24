@@ -4,6 +4,8 @@ import calculateExercises from "./exerciseCalculator.ts";
 const app = express();
 const PORT = 3003;
 
+app.use(express.json());
+
 app.get("/hello", (_req, res) => {
   res.send("Hello Full Stack");
 });
@@ -20,25 +22,30 @@ app.get("/bmi", (req, res) => {
   return res.status(200).json({ height, weight, bmi });
 });
 
-app.get("/exercises", (req: Request, res: Response) => {
+app.post("/exercises", (req: Request, res: Response) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { daily_exercixes, target } = req.body;
+  const { daily_exercises, target } = req.body;
 
-  if (!daily_exercixes || !target) {
+  if (daily_exercises === undefined || target === undefined) {
     return res.status(400).json({ error: "parameters missing" });
   }
-  if (!Array.isArray(daily_exercixes)) {
+  if (!Array.isArray(daily_exercises) || daily_exercises.length === 0) {
     return res.status(400).json({ error: "malformatted parameters" });
   }
-  if (typeof target !== "number") {
+  const targetNum = Number(target);
+  if (isNaN(targetNum)) {
     return res.status(400).json({ error: "malformatted parameters" });
   }
-  for (const number of daily_exercixes) {
-    if (typeof number !== "number") {
+
+  const exerciseHours: number[] = [];
+  for (const number of daily_exercises) {
+    if (isNaN(Number(number))) {
       return res.status(400).json({ error: "malformatted parameters" });
     }
+    exerciseHours.push(Number(number));
   }
-  const result = calculateExercises(daily_exercixes as number[], target);
+
+  const result = calculateExercises(exerciseHours, targetNum);
   return res.status(200).json({ ...result });
 });
 
