@@ -70,10 +70,14 @@ function calculateExercises(dailyExerciseHours: number[], target: number): Resul
   };
 }
 
-try {
-  const { dailyExerciseHours, target } = parseExercisesArguments(process.argv);
-  console.log(calculateExercises(dailyExerciseHours, target));
-} catch (error: any) {
-  console.error("Error:", error.message);
-  console.log("Usage: npm run calculateExercises <target> <hour1> <hour2> ...");
+if (process.argv[1] === import.meta.filename) {
+  try {
+    const { dailyExerciseHours, target } = parseExercisesArguments(process.argv);
+    console.log(calculateExercises(dailyExerciseHours, target));
+  } catch (error: any) {
+    console.error("Error:", error.message);
+    console.log("Usage: npm run calculateExercises <target> <hour1> <hour2> ...");
+  }
 }
+
+export default calculateExercises;
