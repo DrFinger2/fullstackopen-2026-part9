@@ -13,7 +13,6 @@ function parseBmiArguments(args: string[]): { height: number; weight: number } {
 export function calculateBmi(height: number, weight: number): string {
   const heightInMeters = height / 100;
   const bmi = weight / (heightInMeters * heightInMeters);
-  const x: any = 10;
 
   if (bmi < 18.5) {
     return "Underweight";
@@ -30,8 +29,13 @@ if (process.argv[1] === import.meta.filename) {
   try {
     const { height, weight } = parseBmiArguments(process.argv);
     console.log(calculateBmi(height, weight));
-  } catch (error: any) {
-    console.error("Error:", error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error:", error.message);
+    } else {
+      console.error("Error: ", "Unknown error");
+    }
+
     console.log("Usage: npm run calculateBmi <height in cm> <weight in kg>");
   }
 }

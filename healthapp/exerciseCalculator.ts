@@ -13,8 +13,8 @@ function parseExercisesArguments(args: string[]): { dailyExerciseHours: number[]
     throw new Error("Not enough arguments");
   }
 
-  let dailyExerciseHours = [];
-  let target = Number(args[2]);
+  const dailyExerciseHours: number[] = [];
+  const target: number = Number(args[2]);
 
   if (isNaN(target)) {
     throw new Error("Provided values were not numbers!");
@@ -42,8 +42,8 @@ function calculateExercises(dailyExerciseHours: number[], target: number): Resul
   const average = totalHours / periodLength;
   const success = average >= target;
 
-  let rating = 0;
-  let ratingDescription = "";
+  let rating: number;
+  let ratingDescription: string;
 
   const excellent = target;
   const notTooBad = target * 0.6;
@@ -74,8 +74,13 @@ if (process.argv[1] === import.meta.filename) {
   try {
     const { dailyExerciseHours, target } = parseExercisesArguments(process.argv);
     console.log(calculateExercises(dailyExerciseHours, target));
-  } catch (error: any) {
-    console.error("Error:", error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error:", error.message);
+    } else {
+      console.error("Error:", "Unknown error");
+    }
+
     console.log("Usage: npm run calculateExercises <target> <hour1> <hour2> ...");
   }
 }
