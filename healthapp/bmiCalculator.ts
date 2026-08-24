@@ -2,10 +2,8 @@ function parseBmiArguments(args: string[]): { height: number; weight: number } {
   if (args.length < 4) {
     throw new Error("Not enough arguments: need height and weight");
   }
-
   const height = Number(args[2]);
   const weight = Number(args[3]);
-
   if (isNaN(height) || isNaN(weight)) {
     throw new Error("Provided values were not numbers!");
   }
@@ -34,3 +32,5 @@ try {
   console.error("Error:", error.message);
   console.log("Usage: npm run calculateBmi <height in cm> <weight in kg>");
 }
+
+export default calculateBmi;
