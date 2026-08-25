@@ -6,12 +6,14 @@ export const errorMiddleware = (
   error: unknown,
   _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) => {
   if (error instanceof z.ZodError) {
     res.status(400).send({ error: error.issues });
+  } else if (error instanceof Error) {
+    res.status(400).send({ error: error.message });
   } else {
-    next(error);
+    res.status(400).send({ error: "Unknown error" });
   }
 };
 
