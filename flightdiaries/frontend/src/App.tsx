@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import diaryService from "./services/diaryService";
 import type { DiaryEntry, NotificationEntry } from "./utils/types";
+import type { NewDiaryEntry } from "./utils/types";
+import getErrorMessage from "./utils/getErrorMessage";
+import diaryService from "./services/diaryService";
 import FlightDiariesPage from "./pages/FlightDiariesPage";
 import AddNewDiaryPage from "./pages/AddNewDiaryPage";
-import type { NewDiaryEntry } from "./utils/types";
 import Notification from "./components/Notification";
+
 const App = () => {
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
 
@@ -26,12 +28,9 @@ const App = () => {
     try {
       const entry = await diaryService.addNew(newEntry);
       setEntries(entries.concat(entry));
-      notify("Added new entry!", "success");
-      return true;
+      return notify("Added new entry!", "success");
     } catch (error) {
-      console.error(error);
-      notify("failed to add new entry!", "error");
-      return false;
+      return notify(getErrorMessage(error), "error");
     }
   };
 
@@ -41,6 +40,7 @@ const App = () => {
       type: type,
       idx: notification.idx + 1,
     });
+    return type === "success";
   };
 
   return (

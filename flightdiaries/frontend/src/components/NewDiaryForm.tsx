@@ -12,8 +12,8 @@ interface NewDiaryProps {
 const NewDiaryForm = (props: NewDiaryProps) => {
   const date = useField("date");
   const comment = useField("text");
-  const [weather, setWeather] = useState("");
-  const [visibility, setVisibility] = useState("");
+  const [weather, setWeather] = useState("sunny");
+  const [visibility, setVisibility] = useState("great");
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -24,11 +24,12 @@ const NewDiaryForm = (props: NewDiaryProps) => {
       visibility: visibility as NewDiaryEntry["visibility"],
       comment: comment.field.value || undefined,
     });
+
     if (ok) {
       date.reset();
       comment.reset();
-      setWeather("");
-      setVisibility("");
+      setWeather("sunny");
+      setVisibility("great");
     }
   };
 
