@@ -21,18 +21,12 @@ const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
   }));
 };
 
-const addPatient = (entry: NewPatientEntry): NonSensitivePatientEntry => {
+const addPatient = (entry: NewPatientEntry): PatientEntry => {
   const id = uuid();
   const patient: PatientEntry = { ...entry, id: id };
   patientData.push(patient);
 
-  return {
-    id: patient.id,
-    name: patient.name,
-    dateOfBirth: patient.dateOfBirth,
-    gender: patient.gender,
-    occupation: patient.occupation,
-  };
+  return patient;
 };
 
 export default {
