@@ -1,6 +1,7 @@
 import express from "express";
 import diagnosisRouter from "./routes/diagnoses.ts";
 import patientsRouter from "./routes/patients.ts";
+import { errorMiddleware } from "./utils/middleware.ts";
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.get("/api/ping", (_req, res) => {
 
 app.use("/api/diagnoses", diagnosisRouter);
 app.use("/api/patients", patientsRouter);
+
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
