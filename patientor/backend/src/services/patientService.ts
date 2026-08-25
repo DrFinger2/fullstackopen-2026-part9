@@ -1,11 +1,11 @@
-import type { NonSensitivePatient } from "../types/types.ts";
+import type { NonSensitivePatientEntry } from "../types/types.ts";
 import patientData from "../data/patients.ts";
 
 const getEntries = () => {
   return patientData;
 };
 
-const getNonSensitiveEntries = (): NonSensitivePatient[] => {
+const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
   return patientData.map(({ id, name, dateOfBirth, gender, occupation }) => ({
     id,
     name,

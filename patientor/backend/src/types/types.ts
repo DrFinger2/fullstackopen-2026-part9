@@ -1,12 +1,12 @@
 export type Gender = "male" | "female" | "other";
 
-export interface Diagnosis {
+export interface DiagnosisEntry {
   code: string;
   name: string;
   latin?: string;
 }
 
-export interface Patient {
+export interface PatientEntry {
   id: string;
   name: string;
   dateOfBirth: string;
@@ -15,4 +15,4 @@ export interface Patient {
   occupation: string;
 }
 
-export type NonSensitivePatient = Omit<Patient, "ssn">;
+export type NonSensitivePatientEntry = Omit<PatientEntry, "ssn">;

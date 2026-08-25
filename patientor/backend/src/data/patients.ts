@@ -1,6 +1,6 @@
-import type { Patient } from "../types/types.ts";
+import type { PatientEntry } from "../types/types.ts";
 
-const data: Patient[] = [
+const data: PatientEntry[] = [
   {
     id: "d2773336-f723-11e9-8f0b-362b9e155667",
     name: "John McClane",
