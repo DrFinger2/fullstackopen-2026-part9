@@ -1,23 +1,27 @@
 import express from "express";
 import patientService from "../services/patientService.ts";
 import parseNewPatientEntry from "../utils/parseNewPatientEntry.ts";
-import type {
-  NewPatientEntry,
-  NonSensitivePatientEntry,
-} from "../types/types.ts";
+import getErrorMessage from "../utils/getErrorMessage.ts";
 
 const router = express.Router();
 
 router.get("/", (_req, res) => {
-  const data = patientService.getNonSensitiveEntries();
-  res.status(200).send(data);
+  try {
+    const data = patientService.getNonSensitiveEntries();
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
 });
 
 router.post("/", (req, res) => {
-  const newEntry: NewPatientEntry = parseNewPatientEntry(req.body);
-  const addedEntry: NonSensitivePatientEntry =
-    patientService.addPatient(newEntry);
-  res.status(200).send(addedEntry);
+  try {
+    const newEntry = parseNewPatientEntry(req.body);
+    const addedEntry = patientService.addPatient(newEntry);
+    res.status(200).send(addedEntry);
+  } catch (error: unknown) {
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
 });
 
 export default router;
