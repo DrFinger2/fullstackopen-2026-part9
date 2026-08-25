@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import diaryService from "./services/diaryService";
 import type { DiaryEntry } from "./utils/types";
-import Header from "./components/Header";
-import Content from "./components/Content";
+import FlightDiariesPage from "./pages/FlightDiariesPage";
+import AddNewDiaryPage from "./pages/AddNewDiaryPage";
 
 const App = () => {
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
@@ -17,8 +17,8 @@ const App = () => {
 
   return (
     <div>
-      <Header name="Flight diaries" />
-      <Content entries={entries} />
+      <AddNewDiaryPage />
+      <FlightDiariesPage entires={entries} />
     </div>
   );
 };
