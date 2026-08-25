@@ -27,7 +27,7 @@ const Part = (props: PartProps) => {
       <legend>
         <strong>{part.name}</strong>
       </legend>
-      <p>Exercise count: {part.exerciseCount}</p>
+      <p>Project exercises: {part.exerciseCount}</p>
       <p>Group project count: {part.groupProjectCount}</p>
     </fieldset>
   );
