@@ -1,14 +1,15 @@
-import diaryData from "../data/diagnoses.ts";
+import diagnosisData from "../data/diagnoses.ts";
+import type { Diagnosis } from "../types/types.ts";
 
-const getEntries = () => {
-  return diaryData;
+const getEntries = (): Diagnosis[] => {
+  return diagnosisData;
 };
 
-const addDiary = () => {
+const addDiagnosis = () => {
   return null;
 };
 
 export default {
   getEntries,
-  addDiary,
+  addDiagnosis,
 };

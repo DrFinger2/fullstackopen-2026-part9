@@ -1,12 +1,11 @@
 import express from "express";
+import patientService from "../services/patientService.ts";
+
 const router = express.Router();
 
 router.get("/", (_req, res) => {
-  res.send("Fetching all patients!");
-});
-
-router.post("/", (_req, res) => {
-  res.send("Saving a patient!");
+  const data = patientService.getNonSensitiveEntries();
+  res.status(200).send(data);
 });
 
 export default router;
