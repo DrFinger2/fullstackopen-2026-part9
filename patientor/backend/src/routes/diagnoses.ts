@@ -9,7 +9,7 @@ router.get("/", (_req, res) => {
     const data = diagnosisService.getEntries();
     return res.status(200).send(data);
   } catch (error) {
-    return res.status(400).json({ error: getErrorMessage(error) });
+    return res.status(400).send(getErrorMessage(error));
   }
 });
 

@@ -10,7 +10,7 @@ router.get("/", (_req, res) => {
     const data = patientService.getNonSensitiveEntries();
     res.status(200).send(data);
   } catch (error) {
-    res.status(400).json({ error: getErrorMessage(error) });
+    res.status(400).send(getErrorMessage(error));
   }
 });
 
@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
     const addedEntry = patientService.addPatient(newEntry);
     res.status(200).send(addedEntry);
   } catch (error: unknown) {
-    res.status(400).json({ error: getErrorMessage(error) });
+    res.status(400).send(getErrorMessage(error));
   }
 });
 
