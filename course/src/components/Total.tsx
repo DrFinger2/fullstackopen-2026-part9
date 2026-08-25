@@ -7,7 +7,11 @@ const Total = (props: TotalProps) => {
     0,
   );
 
-  return <p>Number of exercises {totalExercises}</p>;
+  return (
+    <p>
+      <strong>Number of exercises: {totalExercises}</strong>
+    </p>
+  );
 };
 
 export default Total;

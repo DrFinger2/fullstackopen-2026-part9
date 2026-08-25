@@ -13,37 +13,45 @@ interface PartProps {
 
 const Part = (props: PartProps) => {
   const renderBasic = (part: CoursePartBasic) => (
-    <div>
-      <p>name: {part.name}</p>
-      <p>exercise count: {part.exerciseCount}</p>
-      <p>description: {part.description}</p>
-    </div>
+    <fieldset>
+      <legend>
+        <strong>{part.name}</strong>
+      </legend>
+      <p>Project exercises: {part.exerciseCount}</p>
+      <p>{part.description}</p>
+    </fieldset>
   );
+
   const renderGroup = (part: CoursePartGroup) => (
-    <div>
-      <p>name: {part.name}</p>
-      <p>exercise count: {part.exerciseCount}</p>
-      <p>group project count: {part.groupProjectCount}</p>
-    </div>
+    <fieldset>
+      <legend>
+        <strong>{part.name}</strong>
+      </legend>
+      <p>Exercise count: {part.exerciseCount}</p>
+      <p>Group project count: {part.groupProjectCount}</p>
+    </fieldset>
   );
+
   const renderBackground = (part: CoursePartBackground) => (
-    <div>
-      <p>name: {part.name}</p>
-      <p>exercise count: {part.exerciseCount}</p>
-      <p>description: {part.description}</p>
-      <p>background material: {part.backgroundMaterial}</p>
-    </div>
+    <fieldset>
+      <legend>
+        <strong>{part.name}</strong>
+      </legend>
+      <p>Project exercises: {part.exerciseCount}</p>
+      <p>{part.description}</p>
+      <p>Background material: {part.backgroundMaterial}</p>
+    </fieldset>
   );
+
   const renderSpecial = (part: CoursePartSpecial) => (
-    <div>
-      <p>name: {part.name}</p>
-      <p>exercise count: {part.exerciseCount}</p>
-      <p>description: {part.description}</p>
-      <p>required skills:</p>
-      {part.requirements.map((text) => (
-        <div key={text}>{text}</div>
-      ))}
-    </div>
+    <fieldset>
+      <legend>
+        <strong>{part.name}</strong>
+      </legend>
+      <p>Project exercises: {part.exerciseCount}</p>
+      <p>{part.description}</p>
+      <p>Required skills: {part.requirements.join(", ")}</p>
+    </fieldset>
   );
 
   switch (props.part.kind) {
