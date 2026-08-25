@@ -1,11 +1,12 @@
 import { useState } from "react";
 import type { NewDiaryEntry } from "../utils/types";
 import { Weather, Visibility } from "../utils/types";
+
 import useField from "../hooks/useField";
 import RadioGroup from "./RadioGroup";
 
 interface NewDiaryProps {
-  onSubmit: (newEntry: NewDiaryEntry) => void;
+  onSubmit: (newEntry: NewDiaryEntry) => Promise<boolean>;
 }
 
 const NewDiaryForm = (props: NewDiaryProps) => {
@@ -14,14 +15,21 @@ const NewDiaryForm = (props: NewDiaryProps) => {
   const [weather, setWeather] = useState("");
   const [visibility, setVisibility] = useState("");
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    props.onSubmit({
+
+    const ok = await props.onSubmit({
       date: date.field.value,
       weather: weather as NewDiaryEntry["weather"],
       visibility: visibility as NewDiaryEntry["visibility"],
       comment: comment.field.value || undefined,
     });
+    if (ok) {
+      date.reset();
+      comment.reset();
+      setWeather("");
+      setVisibility("");
+    }
   };
 
   return (

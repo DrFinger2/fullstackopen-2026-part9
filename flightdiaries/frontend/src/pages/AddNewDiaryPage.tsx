@@ -2,15 +2,15 @@ import Header from "../components/Header";
 import NewDiaryForm from "../components/NewDiaryForm";
 import type { NewDiaryEntry } from "../utils/types";
 
-const AddNewDiaryPage = () => {
-  const handleSubmit = (newEntry: NewDiaryEntry) => {
-    console.log(newEntry);
-  };
+interface NewDiaryPageProps {
+  onSubmit: (newEntry: NewDiaryEntry) => Promise<boolean>;
+}
 
+const AddNewDiaryPage = (props: NewDiaryPageProps) => {
   return (
     <div>
       <Header name="Add new entry" />
-      <NewDiaryForm onSubmit={handleSubmit} />
+      <NewDiaryForm onSubmit={props.onSubmit} />
     </div>
   );
 };
