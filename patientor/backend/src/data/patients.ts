@@ -1,4 +1,4 @@
-import type { PatientEntry } from "../types/types.ts";
+import type { PatientEntry } from "../utils/types.ts";
 
 const data: PatientEntry[] = [
   {

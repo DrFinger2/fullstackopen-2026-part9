@@ -5,7 +5,7 @@ import type {
   NewPatientEntry,
   NonSensitivePatientEntry,
   PatientEntry,
-} from "../types/types.ts";
+} from "../utils/types.ts";
 
 const getEntries = () => {
   return patientData;

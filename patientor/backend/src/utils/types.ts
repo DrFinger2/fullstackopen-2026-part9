@@ -1,3 +1,6 @@
+import type { z } from "zod";
+import type { NewPatientSchema } from "./schemas.ts";
+
 export const Gender = {
   Male: "male",
   Female: "female",
@@ -12,14 +15,10 @@ export interface DiagnosisEntry {
   latin?: string;
 }
 
-export interface PatientEntry {
+export type NewPatientEntry = z.infer<typeof NewPatientSchema>;
+
+export interface PatientEntry extends NewPatientEntry {
   id: string;
-  name: string;
-  dateOfBirth: string;
-  ssn: string;
-  gender: Gender;
-  occupation: string;
 }
 
-export type NewPatientEntry = Omit<PatientEntry, "id">;
 export type NonSensitivePatientEntry = Omit<PatientEntry, "ssn">;
