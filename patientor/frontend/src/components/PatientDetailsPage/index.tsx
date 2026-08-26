@@ -20,12 +20,12 @@ const PatientDetailsPage = () => {
   const [submitError, setSubmitError] = useState<string | undefined>();
 
   const submitEntry = async (values: EntryFormValues) => {
-    try {
-      await addEntry(values);
+    const result = await addEntry(values);
+    if (result.success) {
       setModalOpen(false);
       setSubmitError(undefined);
-    } catch (error: unknown) {
-      setSubmitError(error instanceof Error ? error.message : "Unknown error");
+    } else {
+      setSubmitError(result.error);
     }
   };
 

@@ -1,5 +1,5 @@
 import { useState, SyntheticEvent } from "react";
-import { TextField, Grid, Button, Stack } from "@mui/material";
+import { TextField, Grid, Button, Stack, MenuItem } from "@mui/material";
 import { EntryFormValues, HealthCheckRating } from "../../types";
 
 interface Props {
@@ -16,7 +16,11 @@ const AddEntryForm = ({ onCancel, onSubmit }: Props) => {
 
   const addEntry = (event: SyntheticEvent) => {
     event.preventDefault();
-    const rating = Number(healthCheckRating) as HealthCheckRating;
+    const rating =
+      healthCheckRating === ""
+        ? undefined
+        : (Number(healthCheckRating) as HealthCheckRating);
+
     const codes = diagnosisCodes
       ? diagnosisCodes.split(",").map((code) => code.trim())
       : undefined;
@@ -55,12 +59,20 @@ const AddEntryForm = ({ onCancel, onSubmit }: Props) => {
             onChange={({ target }) => setDescription(target.value)}
           />
           <TextField
+            select
             label="Health check rating"
-            placeholder="0-3"
             fullWidth
             value={healthCheckRating}
             onChange={({ target }) => setHealthCheckRating(target.value)}
-          />
+          >
+            <MenuItem value="" disabled>
+              Select a rating
+            </MenuItem>
+            <MenuItem value={0}>Healthy</MenuItem>
+            <MenuItem value={1}>Low risk</MenuItem>
+            <MenuItem value={2}>High risk</MenuItem>
+            <MenuItem value={3}>Critical risk</MenuItem>
+          </TextField>
           <TextField
             label="Diagnosis codes"
             placeholder="comma separated, e.g. Z57.1, M51.2"
