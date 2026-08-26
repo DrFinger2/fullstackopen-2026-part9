@@ -55,16 +55,13 @@ export interface HospitalEntry extends BaseEntry {
   discharge: Discharge;
 }
 
-export interface OccupationalHealthcareEntry extends BaseEntry {
+export interface OccupationalEntry extends BaseEntry {
   type: "OccupationalHealthcare";
   employerName: string;
   sickLeave?: SickLeave;
 }
 
-export type Entry =
-  | HospitalEntry
-  | OccupationalHealthcareEntry
-  | HealthCheckEntry;
+export type Entry = HospitalEntry | OccupationalEntry | HealthCheckEntry;
 
 export interface PatientDetails extends Patient {
   entries: Entry[];

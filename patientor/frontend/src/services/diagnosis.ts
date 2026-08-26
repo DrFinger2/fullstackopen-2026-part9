@@ -17,9 +17,10 @@ const getByCode = async (code: string) => {
 };
 
 const getByCodes = async (codes: string[]): Promise<Diagnosis[]> => {
+  const uniqueCodes = [...new Set(codes)];
   const diagnoses: Diagnosis[] = [];
 
-  for (const code of codes) {
+  for (const code of uniqueCodes) {
     const address = `${apiBaseUrl}/diagnoses/${code}`;
     const { data } = await axios.get<Diagnosis>(address);
     if (data) {

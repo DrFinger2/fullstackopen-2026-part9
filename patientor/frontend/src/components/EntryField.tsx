@@ -3,13 +3,15 @@ import { Box, Typography } from "@mui/material";
 interface Props {
   label: string;
   value?: string | number;
+  strong?: boolean;
 }
 
-const EntryField = (props: Props) => {
+const EntryField = ({ label, value = "—", strong = false }: Props) => {
   const text = {
     width: 130,
     color: " 	rgb(50, 50, 50)",
     flexShrink: 0,
+    fontWeight: strong ? "bold" : "normal",
   };
   const container = {
     display: "flex",
@@ -22,9 +24,9 @@ const EntryField = (props: Props) => {
   return (
     <Box sx={container}>
       <Typography component="span" sx={text}>
-        {props.label}:
+        {label}:
       </Typography>
-      <Typography component="span">{props.value ?? "—"}</Typography>
+      <Typography component="span">{value ?? "—"}</Typography>
     </Box>
   );
 };
