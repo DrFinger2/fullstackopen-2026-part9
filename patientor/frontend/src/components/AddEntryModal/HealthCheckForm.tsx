@@ -18,7 +18,7 @@ const HealthCheckForm = ({ onCancel, onSubmit, diagnoses }: Props) => {
   const [date, setDate] = useState("");
   const [specialist, setSpecialist] = useState("");
   const [description, setDescription] = useState("");
-  const [healthCheckRating, setHealthCheckRating] = useState("");
+  const [healthCheckRating, setHealthCheckRating] = useState("0");
   const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
 
   const handleSubmit = (event: SyntheticEvent) => {

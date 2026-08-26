@@ -2,9 +2,11 @@ import express from "express";
 import diagnosisRouter from "./routes/diagnoses.ts";
 import patientsRouter from "./routes/patients.ts";
 import { errorMiddleware } from "./utils/middleware.ts";
+import cors from "cors";
 
 const app = express();
 
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 const PORT = 3001;

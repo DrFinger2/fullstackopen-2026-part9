@@ -63,7 +63,7 @@ const PatientDetailsPage = () => {
       <DetailRow label="Date of Birth" value={patient.dateOfBirth} />
 
       <Button variant="contained" onClick={openModal}>
-        Add entry
+        Add New Entry
       </Button>
 
       <AddEntryModal
