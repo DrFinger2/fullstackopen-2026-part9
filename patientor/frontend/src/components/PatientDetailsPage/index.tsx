@@ -3,6 +3,7 @@ import type { PatientDetails } from "../../types";
 import patients from "../../services/patients";
 import { useEffect, useState } from "react";
 import { Container, Typography } from "@mui/material";
+import DetailRow from "../DetailRow";
 import Entries from "./Entries";
 
 const PatientDetailsPage = () => {
@@ -15,9 +16,7 @@ const PatientDetailsPage = () => {
     const fetchDetails = async () => {
       try {
         setDetails(undefined);
-        if (!id) {
-          return;
-        }
+        if (!id) return;
         const data = await patients.get(id);
         setDetails(data || null);
       } catch {
@@ -42,19 +41,11 @@ const PatientDetailsPage = () => {
   return (
     <Container>
       <Typography variant="h4">{details.name}</Typography>
-      <Typography>
-        <strong>Gender:</strong> {details.gender}
-      </Typography>
-      <Typography>
-        <strong>SSN:</strong> {details.ssn}
-      </Typography>
-      <Typography>
-        <strong>Occupation:</strong> {details.occupation}
-      </Typography>
-      <Typography>
-        <strong>Date of Birth:</strong> {details.dateOfBirth}
-      </Typography>
-      {details.entries && <Entries entries={details.entries} />}
+      <DetailRow label="Gender" value={details.gender} />
+      <DetailRow label="SSN" value={details.ssn} />
+      <DetailRow label="Occupation" value={details.occupation} />
+      <DetailRow label="Date of Birth" value={details.dateOfBirth} />
+      {details.entries.length > 0 && <Entries entries={details.entries} />}
     </Container>
   );
 };

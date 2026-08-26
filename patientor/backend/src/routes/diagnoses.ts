@@ -8,6 +8,12 @@ router.get("/", (_req, res) => {
   return res.status(200).send(data);
 });
 
+router.get("/:code", (req, res) => {
+  const { code } = req.params;
+  const data = diagnosisService.getEntry(code);
+  return res.status(200).send(data);
+});
+
 router.post("/", (_req, res) => {
   res.send("Saving a patient!");
 });

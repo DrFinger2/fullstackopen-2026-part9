@@ -1,10 +1,9 @@
+import type { HealthCheckEntry, HospitalEntry, Entry } from "../../types";
+import type { OccupationalHealthcareEntry } from "../../types";
+
 import { Container, Typography } from "@mui/material";
-import type {
-  HealthCheckEntry,
-  HospitalEntry,
-  OccupationalHealthcareEntry,
-  Entry,
-} from "../../types";
+import HealthRatingBar from "../HealthRatingBar";
+import EntryField from "../EntryField";
 
 interface Props {
   entries: Entry[];
@@ -14,28 +13,22 @@ const Entries = (props: Props) => {
   const RenderEntry = (entry: Entry) => {
     return (
       <>
-        <Typography>
-          <strong>Description:</strong> {entry.description}
-        </Typography>
-        <Typography>
-          <strong>Date:</strong> {entry.date}
-        </Typography>
-        <Typography>
-          <strong>Specialist:</strong> {entry.specialist}
-        </Typography>
-        <Typography>
-          <strong>Diagnosis:</strong> {entry.diagnosisCodes?.join(", ")}
-        </Typography>
+        <EntryField label="Description" value={entry.description} />
+        <EntryField label="Date" value={entry.date} />
+        <EntryField label="Specialist" value={entry.specialist} />
+        <EntryField
+          label="Diagnosis"
+          value={entry.diagnosisCodes?.join(", ")}
+        />
       </>
     );
   };
+
   const RenderHealthCheckEntry = (entry: HealthCheckEntry) => {
     return (
       <>
         {RenderEntry(entry)}
-        <Typography>
-          <strong>Rating:</strong> {entry.healthCheckRating}
-        </Typography>
+        <HealthRatingBar rating={entry.healthCheckRating} showText={false} />
       </>
     );
   };
@@ -48,8 +41,8 @@ const Entries = (props: Props) => {
           <strong>Discharge</strong>
         </Typography>
         <Container>
-          <Typography>Date: {entry.discharge.date}</Typography>
-          <Typography>Criteria: {entry.discharge.criteria}</Typography>
+          <EntryField label="Date" value={entry.discharge.date} />
+          <EntryField label="Criteria" value={entry.discharge.criteria} />
         </Container>
       </>
     );
@@ -58,22 +51,23 @@ const Entries = (props: Props) => {
   const RenderOccupationalHealthcareEntry = (
     entry: OccupationalHealthcareEntry,
   ) => {
+    const start = entry?.sickLeave?.startDate;
+    const end = entry?.sickLeave?.endDate;
+
     return (
       <>
         {RenderEntry(entry)}
-        <Typography>
-          <strong>Employer name: </strong>
-          {entry.employerName}
-        </Typography>
-
+        <EntryField label="Employer" value={entry.employerName} />
         {entry.sickLeave && (
-          <Container>
+          <>
             <Typography>
-              <strong>Sick leave</strong>
+              <strong>Sick leave:</strong>
             </Typography>
-            <Typography>Start date:{entry.sickLeave.startDate}</Typography>
-            <Typography>End date: {entry.sickLeave.endDate}</Typography>{" "}
-          </Container>
+            <Container>
+              <EntryField label="Start date" value={start} />
+              <EntryField label="End date" value={end} />
+            </Container>
+          </>
         )}
       </>
     );
@@ -99,7 +93,12 @@ const Entries = (props: Props) => {
           default:
             content = <Typography>Entry type not implemented</Typography>;
         }
-        return <Container key={entry.id}>{content}</Container>;
+        return (
+          <Container key={entry.id}>
+            {content}
+            <br />
+          </Container>
+        );
       })}
     </>
   );
