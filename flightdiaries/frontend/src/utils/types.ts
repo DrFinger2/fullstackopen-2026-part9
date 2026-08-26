@@ -27,6 +27,7 @@ export const DiaryEntrySchema = z.object({
 });
 
 export type DiaryEntry = z.infer<typeof DiaryEntrySchema>;
+
 export type NewDiaryEntry = Omit<DiaryEntry, "id">;
 
 export interface NotificationEntry {

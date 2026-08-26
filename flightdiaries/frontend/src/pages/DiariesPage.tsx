@@ -2,11 +2,11 @@ import type { DiaryEntry } from "../utils/types";
 import Header from "../components/Header";
 import Content from "../components/Content";
 
-interface FlightDiariesProps {
+interface DiariesPageProps {
   entires: DiaryEntry[];
 }
 
-const FlightDiariesPage = (props: FlightDiariesProps) => {
+const DiariesPage = (props: DiariesPageProps) => {
   return (
     <div>
       <Header name="Flight diaries" />
@@ -15,4 +15,4 @@ const FlightDiariesPage = (props: FlightDiariesProps) => {
   );
 };
 
-export default FlightDiariesPage;
+export default DiariesPage;

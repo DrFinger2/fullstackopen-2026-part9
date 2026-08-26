@@ -6,7 +6,7 @@ interface NewDiaryPageProps {
   onSubmit: (newEntry: NewDiaryEntry) => Promise<boolean>;
 }
 
-const AddNewDiaryPage = (props: NewDiaryPageProps) => {
+const NewDiaryPage = (props: NewDiaryPageProps) => {
   return (
     <div>
       <Header name="Add new entry" />
@@ -15,4 +15,4 @@ const AddNewDiaryPage = (props: NewDiaryPageProps) => {
   );
 };
 
-export default AddNewDiaryPage;
+export default NewDiaryPage;

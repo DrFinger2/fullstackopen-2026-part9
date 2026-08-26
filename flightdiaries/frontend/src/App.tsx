@@ -3,8 +3,8 @@ import type { DiaryEntry, NotificationEntry } from "./utils/types";
 import type { NewDiaryEntry } from "./utils/types";
 import getErrorMessage from "./utils/getErrorMessage";
 import diaryService from "./services/diaryService";
-import FlightDiariesPage from "./pages/FlightDiariesPage";
-import AddNewDiaryPage from "./pages/AddNewDiaryPage";
+import DiariesPage from "./pages/DiariesPage";
+import NewDiaryPage from "./pages/NewDiaryPage";
 import Notification from "./components/Notification";
 
 const App = () => {
@@ -46,8 +46,8 @@ const App = () => {
   return (
     <div>
       <Notification notification={notification} />
-      <AddNewDiaryPage onSubmit={addEntry} />
-      <FlightDiariesPage entires={entries} />
+      <NewDiaryPage onSubmit={addEntry} />
+      <DiariesPage entires={entries} />
     </div>
   );
 };
