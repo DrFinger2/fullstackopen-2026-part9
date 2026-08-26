@@ -46,6 +46,7 @@ const App = () => {
             />
             <Route path="/patients/:id" element={<PatientDetailsPage />} />
           </Routes>
+          <Divider sx={{ marginY: 4 }} />
         </Container>
       </Router>
     </div>

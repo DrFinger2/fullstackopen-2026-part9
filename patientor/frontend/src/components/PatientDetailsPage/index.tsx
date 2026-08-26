@@ -10,6 +10,7 @@ import { Header, SubHeader } from "../_common/Headings";
 import EntryDetails from "./EntryDetails";
 import DetailRow from "./DetailRow";
 import Show from "../_common/Show";
+import { Button } from "@mui/material";
 
 const PatientDetailsPage = () => {
   const { id } = useParams();
@@ -63,7 +64,8 @@ const PatientDetailsPage = () => {
       <DetailRow label="SSN" value={details.ssn} />
       <DetailRow label="Occupation" value={details.occupation} />
       <DetailRow label="Date of Birth" value={details.dateOfBirth} />
-
+      <br />
+      <Button variant="contained"> Add entry</Button>
       <Show when={entries.length > 0}>
         <SubHeader>Entries:</SubHeader>
         {entries.map((entry) => (
