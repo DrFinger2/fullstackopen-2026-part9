@@ -1,4 +1,4 @@
-import type { Patient } from "../src/types.ts";
+import type { Patient } from "../utils/types.ts";
 
 const patients: Patient[] = [
   {
