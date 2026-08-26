@@ -15,7 +15,6 @@ export interface DiagnosisEntry {
   latin?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export type NewPatientEntry = z.infer<typeof NewPatientSchema>;
 
 export interface PatientEntry extends NewPatientEntry {
@@ -73,3 +72,5 @@ export type Entry =
   | HospitalEntry
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
+
+export type Patient = PatientEntry;
