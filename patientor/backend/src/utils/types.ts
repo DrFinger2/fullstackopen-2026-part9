@@ -16,8 +16,6 @@ export interface DiagnosisEntry {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface Entry {}
-
 export type NewPatientEntry = z.infer<typeof NewPatientSchema>;
 
 export interface PatientEntry extends NewPatientEntry {
@@ -26,3 +24,52 @@ export interface PatientEntry extends NewPatientEntry {
 }
 
 export type NonSensitivePatientEntry = Omit<PatientEntry, "ssn" | "entries">;
+
+interface BaseEntry {
+  id: string;
+  description: string;
+  date: string;
+  specialist: string;
+  diagnosisCodes?: Array<DiagnosisEntry["code"]>;
+}
+
+export const HealthCheckRating = {
+  Healthy: 0,
+  LowRisk: 1,
+  HighRisk: 2,
+  CriticalRisk: 3,
+} as const;
+
+export type HealthCheckRating =
+  (typeof HealthCheckRating)[keyof typeof HealthCheckRating];
+
+interface HealthCheckEntry extends BaseEntry {
+  type: "HealthCheck";
+  healthCheckRating: HealthCheckRating;
+}
+
+interface Discharge {
+  date: string;
+  criteria: string;
+}
+
+interface HospitalEntry extends BaseEntry {
+  type: "Hospital";
+  discharge: Discharge;
+}
+
+interface SickLeave {
+  startDate: string;
+  endDate: string;
+}
+
+interface OccupationalHealthcareEntry extends BaseEntry {
+  type: "OccupationalHealthcare";
+  employerName: string;
+  sickLeave?: SickLeave;
+}
+
+export type Entry =
+  | HospitalEntry
+  | OccupationalHealthcareEntry
+  | HealthCheckEntry;
