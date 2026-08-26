@@ -50,11 +50,13 @@ const HealthEntryDetails = ({
   entry: HealthCheckEntry;
   diagnoses: Diagnosis[];
 }) => {
+  const rating =
+    entry.healthCheckRating !== undefined ? entry.healthCheckRating : 0;
   return (
     <Panel>
       <MedicalServicesIcon fontSize="small" />
       <BaseEntry entry={entry} diagnoses={diagnoses} />
-      <HealthRatingBar rating={entry.healthCheckRating} showText={false} />
+      <HealthRatingBar rating={rating} showText={false} />
     </Panel>
   );
 };

@@ -47,7 +47,7 @@ interface BaseEntry {
 
 export interface HealthCheckEntry extends BaseEntry {
   type: "HealthCheck";
-  healthCheckRating: HealthCheckRating;
+  healthCheckRating: HealthCheckRating | undefined;
 }
 
 export interface HospitalEntry extends BaseEntry {
