@@ -5,7 +5,8 @@ import type { Diagnosis, PatientDetails } from "../../types";
 import { useEffect, useState } from "react";
 import { Container, Typography } from "@mui/material";
 import DetailRow from "../DetailRow";
-import Entries from "./Entries";
+import EntryDetails from "./EntryDetails";
+import Show from "../Show";
 
 const PatientDetailsPage = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const PatientDetailsPage = () => {
     const fetch = async () => {
       try {
         setDetails(undefined);
-        if (!id) throw new Error();
+        if (!id) return;
         const details = await patientService.getById(id);
         setDetails(details);
       } catch {
@@ -29,7 +30,11 @@ const PatientDetailsPage = () => {
   }, [id]);
 
   useEffect(() => {
-    diagnosisService.getAll().then(setAllDiagnoses);
+    const fetch = async () => {
+      const data = await diagnosisService.getAll();
+      setAllDiagnoses(data);
+    };
+    fetch();
   }, []);
 
   const missing = "Patient ID is missing from the URL.";
@@ -45,7 +50,8 @@ const PatientDetailsPage = () => {
   }
 
   const codes = new Set(details.entries.flatMap((e) => e.diagnosisCodes ?? []));
-  const filtered = allDiagnoses.filter((d) => codes.has(d.code));
+  const entries = details.entries;
+  const diagnoses = allDiagnoses.filter((d) => codes.has(d.code));
 
   return (
     <Container>
@@ -54,9 +60,15 @@ const PatientDetailsPage = () => {
       <DetailRow label="SSN" value={details.ssn} />
       <DetailRow label="Occupation" value={details.occupation} />
       <DetailRow label="Date of Birth" value={details.dateOfBirth} />
-      {details.entries.length > 0 && (
-        <Entries entries={details.entries} diagnoses={filtered} />
-      )}
+
+      <Show when={entries.length > 0}>
+        <Typography>
+          <strong>Entries:</strong>
+        </Typography>
+        {entries.map((entry) => (
+          <EntryDetails key={entry.id} entry={entry} diagnoses={diagnoses} />
+        ))}
+      </Show>
     </Container>
   );
 };

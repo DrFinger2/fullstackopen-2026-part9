@@ -43,10 +43,11 @@ const HealthEntryDetails = ({
   diagnoses: Diagnosis[];
 }) => {
   return (
-    <>
+    <Container>
       <BaseEntry entry={entry} diagnoses={diagnoses} />
       <HealthRatingBar rating={entry.healthCheckRating} showText={false} />
-    </>
+      <br />
+    </Container>
   );
 };
 
@@ -58,7 +59,7 @@ const HospitalEntryDetails = ({
   diagnoses: Diagnosis[];
 }) => {
   return (
-    <>
+    <Container>
       <BaseEntry entry={entry} diagnoses={diagnoses} />
       <Typography>
         <strong>Discharge</strong>
@@ -67,7 +68,8 @@ const HospitalEntryDetails = ({
         <EntryField label="Date" value={entry.discharge.date} />
         <EntryField label="Criteria" value={entry.discharge.criteria} />
       </Container>
-    </>
+      <br />
+    </Container>
   );
 };
 
@@ -82,7 +84,7 @@ const OccupationEntryDetails = ({
   const end = entry?.sickLeave?.endDate;
 
   return (
-    <>
+    <Container>
       <BaseEntry entry={entry} diagnoses={diagnoses} />
       <EntryField label="Employer" value={entry.employerName} />
       {entry.sickLeave && (
@@ -96,11 +98,12 @@ const OccupationEntryDetails = ({
           </Container>
         </>
       )}
-    </>
+      <br />
+    </Container>
   );
 };
 
-export const EntryDetails = ({
+const EntryDetails = ({
   entry,
   diagnoses,
 }: {
@@ -118,3 +121,5 @@ export const EntryDetails = ({
       return assertNever(entry);
   }
 };
+
+export default EntryDetails;
