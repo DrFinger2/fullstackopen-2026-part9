@@ -17,7 +17,7 @@ const PatientDetailsPage = () => {
       try {
         setDetails(undefined);
         if (!id) return;
-        const data = await patients.get(id);
+        const data = await patients.getById(id);
         setDetails(data || null);
       } catch {
         setDetails(null);
