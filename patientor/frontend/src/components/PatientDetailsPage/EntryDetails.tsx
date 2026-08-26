@@ -18,9 +18,7 @@ const BaseEntry = ({
       <EntryField label="Date" value={entry.date} />
       <EntryField label="Specialist" value={entry.specialist} />
       {entry.diagnosisCodes ? (
-        <Typography>
-          <strong>Diagnoses</strong>
-        </Typography>
+        <Typography>Diagnoses</Typography>
       ) : (
         <EntryField label="Diagnoses" value="-" />
       )}
@@ -61,9 +59,7 @@ const HospitalEntryDetails = ({
   return (
     <Container>
       <BaseEntry entry={entry} diagnoses={diagnoses} />
-      <Typography>
-        <strong>Discharge</strong>
-      </Typography>
+      <Typography>Discharge</Typography>
       <Container>
         <EntryField label="Date" value={entry.discharge.date} />
         <EntryField label="Criteria" value={entry.discharge.criteria} />
@@ -89,9 +85,7 @@ const OccupationEntryDetails = ({
       <EntryField label="Employer" value={entry.employerName} />
       {entry.sickLeave && (
         <>
-          <Typography>
-            <strong>Sick leave:</strong>
-          </Typography>
+          <Typography>Sick leave:</Typography>
           <Container>
             <EntryField label="Start date" value={start} />
             <EntryField label="End date" value={end} />

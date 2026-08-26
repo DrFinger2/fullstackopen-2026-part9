@@ -56,15 +56,15 @@ const PatientDetailsPage = () => {
   return (
     <Container>
       <Typography variant="h4">{details.name}</Typography>
+      <br />
       <DetailRow label="Gender" value={details.gender} />
       <DetailRow label="SSN" value={details.ssn} />
       <DetailRow label="Occupation" value={details.occupation} />
       <DetailRow label="Date of Birth" value={details.dateOfBirth} />
 
       <Show when={entries.length > 0}>
-        <Typography>
-          <strong>Entries:</strong>
-        </Typography>
+        <br />
+        <Typography variant="h6">Entries:</Typography>
         {entries.map((entry) => (
           <EntryDetails key={entry.id} entry={entry} diagnoses={diagnoses} />
         ))}
