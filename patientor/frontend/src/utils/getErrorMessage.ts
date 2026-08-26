@@ -14,7 +14,10 @@ const getErrorMessage = (error: unknown): string => {
   }
 
   if (Array.isArray(responseError)) {
-    return responseError.at(-1).message;
+    const last = responseError.length - 1;
+    if (last >= 0) {
+      return responseError[last].message;
+    }
   }
 
   return fallback;

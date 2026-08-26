@@ -5,7 +5,7 @@ import Show from "../_common/Show";
 
 interface Props {
   entries: Entry[];
-  diagnoses: Diagnosis[]; // already filtered to only those used
+  diagnoses: Diagnosis[];
 }
 
 const EntryList = ({ entries, diagnoses }: Props) => {

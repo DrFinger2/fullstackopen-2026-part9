@@ -14,7 +14,7 @@ import EntryList from "./EntryList";
 
 const PatientDetailsPage = () => {
   const { id } = useParams();
-  const { patient, isLoading, error: patientError, addEntry } = usePatient(id);
+  const { patient, isLoading, error, addEntry } = usePatient(id);
   const { diagnoses } = useDiagnoses();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string | undefined>();
@@ -43,16 +43,16 @@ const PatientDetailsPage = () => {
 
   if (!id) {
     return <Typography color="error">{missing}</Typography>;
-  }
-  if (isLoading) {
+  } else if (isLoading) {
     return <Typography>{loading}</Typography>;
-  }
-  if (patientError || !patient) {
+  } else if (error) {
+    return <Typography color="error">{error}</Typography>;
+  } else if (!patient) {
     return <Typography color="error">{notFound}</Typography>;
   }
 
   const codes = new Set(patient.entries.flatMap((e) => e.diagnosisCodes ?? []));
-  const usedDiagnoses = diagnoses.filter((d) => codes.has(d.code));
+  const filtered = diagnoses.filter((d) => codes.has(d.code));
 
   return (
     <Container>
@@ -73,7 +73,7 @@ const PatientDetailsPage = () => {
         onClose={closeModal}
       />
 
-      <EntryList entries={patient.entries} diagnoses={usedDiagnoses} />
+      <EntryList entries={patient.entries} diagnoses={filtered} />
     </Container>
   );
 };
