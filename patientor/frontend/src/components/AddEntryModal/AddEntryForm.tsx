@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { TextField, MenuItem, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { ENTRY_TYPES, EntryFormValues, EntryType } from "../../types";
 import { entryTypeOptions } from "./options";
-
+import SelectInputField from "../_common/SelectInputField";
 import HealthCheckForm from "./HealthCheckForm";
 import OccupationalForm from "./OccupationalForm";
 import HospitalForm from "./HospitalForm";
@@ -33,19 +33,12 @@ const AddEntryForm = ({ onCancel, onSubmit }: Props) => {
   return (
     <div>
       <Stack spacing={2}>
-        <TextField
-          select
+        <SelectInputField
           label="Entry type"
-          fullWidth
           value={entryType}
-          onChange={({ target }) => setEntryType(target.value as EntryType)}
-        >
-          {entryTypeOptions.map(({ value, label }) => (
-            <MenuItem key={value} value={value}>
-              {label}
-            </MenuItem>
-          ))}
-        </TextField>
+          set={setEntryType}
+          options={entryTypeOptions}
+        />
 
         {renderForm()}
       </Stack>
