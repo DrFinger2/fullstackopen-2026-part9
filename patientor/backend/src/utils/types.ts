@@ -1,9 +1,5 @@
 import type { z } from "zod";
-import type { NewPatientSchema } from "./schemas.ts";
-
-// This needs to be split to multiple files and put under 'types' folder.
-// I am scared to do some because of the exercise structure.
-// Terrible code hygiene!
+import type { NewPatientSchema, NewEntrySchema } from "./schemas.ts";
 
 export const Gender = {
   Male: "male",
@@ -68,11 +64,13 @@ export type Entry =
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
 
-export type NewPatientEntry = z.infer<typeof NewPatientSchema>;
+export type NewPatient = z.infer<typeof NewPatientSchema>;
 
-export interface Patient extends NewPatientEntry {
+export interface Patient extends NewPatient {
   id: string;
   entries: Entry[];
 }
 
 export type NonSensitivePatient = Omit<Patient, "ssn" | "entries">;
+
+export type NewEntry = z.infer<typeof NewEntrySchema>;

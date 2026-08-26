@@ -1,8 +1,18 @@
+// Types
 import type { Entry, OccupationalEntry, Diagnosis } from "../../types";
 import type { HealthCheckEntry, HospitalEntry } from "../../types";
+
+// Components
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import WorkIcon from "@mui/icons-material/Work";
+
 import { Container, Typography } from "@mui/material";
 import HealthRatingBar from "../_common/HealthRatingBar";
 import EntryField from "./EntryField";
+import Panel from "../_common/Panel";
+
+// Utils
 import assertNever from "../../utils/assertNever";
 
 const BaseEntry = ({
@@ -41,11 +51,11 @@ const HealthEntryDetails = ({
   diagnoses: Diagnosis[];
 }) => {
   return (
-    <Container>
+    <Panel>
+      <MedicalServicesIcon fontSize="small" />
       <BaseEntry entry={entry} diagnoses={diagnoses} />
       <HealthRatingBar rating={entry.healthCheckRating} showText={false} />
-      <br />
-    </Container>
+    </Panel>
   );
 };
 
@@ -57,15 +67,15 @@ const HospitalEntryDetails = ({
   diagnoses: Diagnosis[];
 }) => {
   return (
-    <Container>
+    <Panel>
+      <LocalHospitalIcon fontSize="small" />
       <BaseEntry entry={entry} diagnoses={diagnoses} />
       <Typography>Discharge</Typography>
       <Container>
         <EntryField label="Date" value={entry.discharge.date} />
         <EntryField label="Criteria" value={entry.discharge.criteria} />
       </Container>
-      <br />
-    </Container>
+    </Panel>
   );
 };
 
@@ -80,7 +90,8 @@ const OccupationEntryDetails = ({
   const end = entry?.sickLeave?.endDate;
 
   return (
-    <Container>
+    <Panel>
+      <WorkIcon fontSize="small" />
       <BaseEntry entry={entry} diagnoses={diagnoses} />
       <EntryField label="Employer" value={entry.employerName} />
       {entry.sickLeave && (
@@ -92,8 +103,7 @@ const OccupationEntryDetails = ({
           </Container>
         </>
       )}
-      <br />
-    </Container>
+    </Panel>
   );
 };
 
