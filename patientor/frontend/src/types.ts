@@ -63,7 +63,10 @@ export interface OccupationalEntry extends BaseEntry {
 
 export type Entry = HospitalEntry | OccupationalEntry | HealthCheckEntry;
 
-export type EntryFormValues = Omit<Entry, "id">;
+export type EntryFormValues =
+  | Omit<HospitalEntry, "id">
+  | Omit<OccupationalEntry, "id">
+  | Omit<HealthCheckEntry, "id">;
 
 export interface PatientDetails extends Patient {
   entries: Entry[];
