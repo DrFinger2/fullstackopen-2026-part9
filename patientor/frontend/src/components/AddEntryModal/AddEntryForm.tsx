@@ -17,6 +17,7 @@ const AddEntryForm = ({ onCancel, onSubmit }: Props) => {
     ENTRY_TYPES.HealthCheck,
   );
 
+  // It is what it is, solution sucks but couldnt come up with anything better either
   const renderForm = () => {
     switch (entryType) {
       case ENTRY_TYPES.HealthCheck:

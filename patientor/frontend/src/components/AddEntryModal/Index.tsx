@@ -8,7 +8,7 @@ import {
 
 import AddEntryForm from "./AddEntryForm";
 import { EntryFormValues } from "../../types";
-
+import Show from "../_common/Show";
 interface Props {
   modalOpen: boolean;
   onClose: () => void;
@@ -21,7 +21,10 @@ const AddEntryModal = ({ modalOpen, onClose, onSubmit, error }: Props) => (
     <DialogTitle>New entry</DialogTitle>
     <Divider />
     <DialogContent>
-      {error && <Alert severity="error">{error}</Alert>}
+      <Show when={Boolean(error)}>
+        <Alert severity="error">{error}</Alert>
+        <br />
+      </Show>
       <AddEntryForm onSubmit={onSubmit} onCancel={onClose} />
     </DialogContent>
   </Dialog>

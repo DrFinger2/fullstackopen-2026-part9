@@ -1,5 +1,5 @@
 import { useState, SyntheticEvent } from "react";
-import { Grid, Button, Stack, Alert } from "@mui/material";
+import { Grid, Button, Stack } from "@mui/material";
 import { EntryFormValues, HealthCheckRating } from "../../types";
 import { healthCheckRatingOptions } from "./options";
 import TextInputField from "../_common/TextInputField";
@@ -17,11 +17,9 @@ const HealthCheckForm = ({ onCancel, onSubmit }: Props) => {
   const [description, setDescription] = useState("");
   const [healthCheckRating, setHealthCheckRating] = useState("");
   const [diagnosisCodes, setDiagnosisCodes] = useState("");
-  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-    setError(null);
 
     const rating = healthCheckRating
       ? (Number(healthCheckRating) as HealthCheckRating)
@@ -70,8 +68,6 @@ const HealthCheckForm = ({ onCancel, onSubmit }: Props) => {
           value={diagnosisCodes}
           set={setDiagnosisCodes}
         />
-
-        {error && <Alert severity="error">{error}</Alert>}
 
         <Grid container justifyContent="space-between" sx={{ marginTop: 2 }}>
           <Grid size="auto">
