@@ -37,6 +37,14 @@ interface SickLeave {
   endDate: string;
 }
 
+export const ENTRY_TYPES = {
+  HealthCheck: "HealthCheck",
+  Hospital: "Hospital",
+  OccupationalHealthcare: "OccupationalHealthcare",
+} as const;
+
+export type EntryType = (typeof ENTRY_TYPES)[keyof typeof ENTRY_TYPES];
+
 interface BaseEntry {
   id: string;
   description: string;
@@ -46,17 +54,17 @@ interface BaseEntry {
 }
 
 export interface HealthCheckEntry extends BaseEntry {
-  type: "HealthCheck";
+  type: typeof ENTRY_TYPES.HealthCheck;
   healthCheckRating: HealthCheckRating | undefined;
 }
 
 export interface HospitalEntry extends BaseEntry {
-  type: "Hospital";
+  type: typeof ENTRY_TYPES.Hospital;
   discharge: Discharge;
 }
 
 export interface OccupationalEntry extends BaseEntry {
-  type: "OccupationalHealthcare";
+  type: typeof ENTRY_TYPES.OccupationalHealthcare;
   employerName: string;
   sickLeave?: SickLeave;
 }
@@ -70,4 +78,19 @@ export type EntryFormValues =
 
 export interface PatientDetails extends Patient {
   entries: Entry[];
+}
+
+export interface FormState {
+  date: string;
+  specialist: string;
+  description: string;
+  diagnosisCodes: string;
+  entryType: EntryType;
+
+  healthCheckRating?: string;
+  employerName?: string;
+  sickLeaveStart?: string;
+  sickLeaveEnd?: string;
+  dischargeDate?: string;
+  dischargeCriteria?: string;
 }

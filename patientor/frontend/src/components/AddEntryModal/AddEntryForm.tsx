@@ -1,6 +1,11 @@
-import { useState, SyntheticEvent } from "react";
-import { TextField, Grid, Button, Stack, MenuItem } from "@mui/material";
-import { EntryFormValues, HealthCheckRating } from "../../types";
+import { useState } from "react";
+import { TextField, MenuItem, Stack } from "@mui/material";
+import { ENTRY_TYPES, EntryFormValues, EntryType } from "../../types";
+import { entryTypeOptions } from "./options";
+
+import HealthCheckForm from "./HealthCheckForm";
+import OccupationalForm from "./OccupationalForm";
+import HospitalForm from "./HospitalForm";
 
 interface Props {
   onCancel: () => void;
@@ -8,98 +13,42 @@ interface Props {
 }
 
 const AddEntryForm = ({ onCancel, onSubmit }: Props) => {
-  const [date, setDate] = useState("");
-  const [specialist, setSpecialist] = useState("");
-  const [description, setDescription] = useState("");
-  const [healthCheckRating, setHealthCheckRating] = useState("");
-  const [diagnosisCodes, setDiagnosisCodes] = useState("");
+  const [entryType, setEntryType] = useState<EntryType>(
+    ENTRY_TYPES.HealthCheck,
+  );
 
-  const addEntry = (event: SyntheticEvent) => {
-    event.preventDefault();
-    const rating =
-      healthCheckRating === ""
-        ? undefined
-        : (Number(healthCheckRating) as HealthCheckRating);
-
-    const codes = diagnosisCodes
-      ? diagnosisCodes.split(",").map((code) => code.trim())
-      : undefined;
-
-    onSubmit({
-      type: "HealthCheck",
-      date,
-      specialist,
-      description,
-      healthCheckRating: rating,
-      diagnosisCodes: codes,
-    });
+  const renderForm = () => {
+    switch (entryType) {
+      case ENTRY_TYPES.HealthCheck:
+        return <HealthCheckForm onCancel={onCancel} onSubmit={onSubmit} />;
+      case ENTRY_TYPES.OccupationalHealthcare:
+        return <OccupationalForm onCancel={onCancel} onSubmit={onSubmit} />;
+      case ENTRY_TYPES.Hospital:
+        return <HospitalForm onCancel={onCancel} onSubmit={onSubmit} />;
+      default:
+        return null;
+    }
   };
 
   return (
     <div>
-      <form onSubmit={addEntry}>
-        <Stack spacing={2}>
-          <TextField
-            label="Date"
-            placeholder="YYYY-MM-DD"
-            fullWidth
-            value={date}
-            onChange={({ target }) => setDate(target.value)}
-          />
-          <TextField
-            label="Specialist"
-            fullWidth
-            value={specialist}
-            onChange={({ target }) => setSpecialist(target.value)}
-          />
-          <TextField
-            label="Description"
-            fullWidth
-            value={description}
-            onChange={({ target }) => setDescription(target.value)}
-          />
-          <TextField
-            select
-            label="Health check rating"
-            fullWidth
-            value={healthCheckRating}
-            onChange={({ target }) => setHealthCheckRating(target.value)}
-          >
-            <MenuItem value="" disabled>
-              Select a rating
+      <Stack spacing={2}>
+        <TextField
+          select
+          label="Entry type"
+          fullWidth
+          value={entryType}
+          onChange={({ target }) => setEntryType(target.value as EntryType)}
+        >
+          {entryTypeOptions.map(({ value, label }) => (
+            <MenuItem key={value} value={value}>
+              {label}
             </MenuItem>
-            <MenuItem value={0}>Healthy</MenuItem>
-            <MenuItem value={1}>Low risk</MenuItem>
-            <MenuItem value={2}>High risk</MenuItem>
-            <MenuItem value={3}>Critical risk</MenuItem>
-          </TextField>
-          <TextField
-            label="Diagnosis codes"
-            placeholder="comma separated, e.g. Z57.1, M51.2"
-            fullWidth
-            value={diagnosisCodes}
-            onChange={({ target }) => setDiagnosisCodes(target.value)}
-          />
-        </Stack>
+          ))}
+        </TextField>
 
-        <Grid container justifyContent="space-between" sx={{ marginTop: 2 }}>
-          <Grid size="auto">
-            <Button
-              color="secondary"
-              variant="contained"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
-          </Grid>
-          <Grid size="auto">
-            <Button type="submit" variant="contained">
-              Add
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
+        {renderForm()}
+      </Stack>
     </div>
   );
 };
