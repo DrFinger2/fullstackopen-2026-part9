@@ -1,8 +1,8 @@
 import type { Entry, OccupationalEntry, Diagnosis } from "../../types";
 import type { HealthCheckEntry, HospitalEntry } from "../../types";
 import { Container, Typography } from "@mui/material";
-import HealthRatingBar from "../HealthRatingBar";
-import EntryField from "../EntryField";
+import HealthRatingBar from "../_common/HealthRatingBar";
+import EntryField from "./EntryField";
 import assertNever from "../../utils/assertNever";
 
 const BaseEntry = ({

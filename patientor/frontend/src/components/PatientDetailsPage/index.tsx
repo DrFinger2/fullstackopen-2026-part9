@@ -1,12 +1,15 @@
-import patientService from "../../services/patients";
-import diagnosisService from "../../services/diagnosis";
-import { useParams } from "react-router-dom";
 import type { Diagnosis, PatientDetails } from "../../types";
-import { useEffect, useState } from "react";
 import { Container, Typography } from "@mui/material";
-import DetailRow from "../DetailRow";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import diagnosisService from "../../services/diagnosis";
+import patientService from "../../services/patients";
+
+// Components
+import { Header, SubHeader } from "../_common/Headings";
 import EntryDetails from "./EntryDetails";
-import Show from "../Show";
+import DetailRow from "./DetailRow";
+import Show from "../_common/Show";
 
 const PatientDetailsPage = () => {
   const { id } = useParams();
@@ -55,16 +58,14 @@ const PatientDetailsPage = () => {
 
   return (
     <Container>
-      <Typography variant="h4">{details.name}</Typography>
-      <br />
+      <Header>{details.name}</Header>
       <DetailRow label="Gender" value={details.gender} />
       <DetailRow label="SSN" value={details.ssn} />
       <DetailRow label="Occupation" value={details.occupation} />
       <DetailRow label="Date of Birth" value={details.dateOfBirth} />
 
       <Show when={entries.length > 0}>
-        <br />
-        <Typography variant="h6">Entries:</Typography>
+        <SubHeader>Entries:</SubHeader>
         {entries.map((entry) => (
           <EntryDetails key={entry.id} entry={entry} diagnoses={diagnoses} />
         ))}
