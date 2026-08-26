@@ -1,6 +1,10 @@
 import type { z } from "zod";
 import type { NewPatientSchema } from "./schemas.ts";
 
+// This needs to be split to multiple files and put under 'types' folder.
+// I am scared to do some because of the exercise structure.
+// Terrible code hygiene!
+
 export const Gender = {
   Male: "male",
   Female: "female",
