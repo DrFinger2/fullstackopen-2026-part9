@@ -1,17 +1,17 @@
 import { v1 as uuid } from "uuid";
-import patientData from "../data/patients.ts";
+import patientData from "../data/patients_full.ts";
 
 import type {
   NewPatientEntry,
-  NonSensitivePatientEntry,
-  PatientEntry,
+  NonSensitivePatient,
+  Patient,
 } from "../utils/types.ts";
 
 const getEntries = () => {
   return patientData;
 };
 
-const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
+const getNonSensitiveEntries = (): NonSensitivePatient[] => {
   return patientData.map(({ id, name, dateOfBirth, gender, occupation }) => ({
     id,
     name,
@@ -21,14 +21,15 @@ const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
   }));
 };
 
-const addPatient = (entry: NewPatientEntry): PatientEntry => {
+const addPatient = (entry: NewPatientEntry): Patient => {
   const id = uuid();
-  const patient: PatientEntry = { ...entry, id: id, entries: [] };
+  const patient: Patient = { ...entry, id: id, entries: [] };
   patientData.push(patient);
 
   return patient;
 };
-const findById = (id: string): PatientEntry | undefined => {
+
+const findById = (id: string): Patient | undefined => {
   return patientData.find((patient) => patient.id === id);
 };
 

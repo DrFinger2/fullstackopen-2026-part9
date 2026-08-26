@@ -9,27 +9,18 @@ export const Gender = {
 
 export type Gender = (typeof Gender)[keyof typeof Gender];
 
-export interface DiagnosisEntry {
+export interface Diagnosis {
   code: string;
   name: string;
   latin?: string;
 }
-
-export type NewPatientEntry = z.infer<typeof NewPatientSchema>;
-
-export interface PatientEntry extends NewPatientEntry {
-  id: string;
-  entries: Entry[];
-}
-
-export type NonSensitivePatientEntry = Omit<PatientEntry, "ssn" | "entries">;
 
 interface BaseEntry {
   id: string;
   description: string;
   date: string;
   specialist: string;
-  diagnosisCodes?: Array<DiagnosisEntry["code"]>;
+  diagnosisCodes?: Array<Diagnosis["code"]>;
 }
 
 export const HealthCheckRating = {
@@ -73,4 +64,11 @@ export type Entry =
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
 
-export type Patient = PatientEntry;
+export type NewPatientEntry = z.infer<typeof NewPatientSchema>;
+
+export interface Patient extends NewPatientEntry {
+  id: string;
+  entries: Entry[];
+}
+
+export type NonSensitivePatient = Omit<Patient, "ssn" | "entries">;

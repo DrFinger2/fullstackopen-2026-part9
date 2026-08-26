@@ -1,6 +1,6 @@
-import type { DiagnosisEntry } from "../utils/types.ts";
+import type { Diagnosis } from "../utils/types.ts";
 
-const data: DiagnosisEntry[] = [
+const data: Diagnosis[] = [
   {
     code: "M24.2",
     name: "Disorder of ligament",
