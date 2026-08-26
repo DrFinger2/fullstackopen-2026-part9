@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import type { Patient } from "../../types";
 import patients from "../../services/patients";
 import { useEffect, useState } from "react";
+import { Container, Typography } from "@mui/material";
 
 const PatientDetailsPage = () => {
   const { id } = useParams();
@@ -9,25 +10,49 @@ const PatientDetailsPage = () => {
 
   useEffect(() => {
     const fetchDetails = async () => {
-      if (!id) {
+      try {
         setDetails(undefined);
-        return;
+        if (!id) {
+          return;
+        }
+        const data = await patients.get(id);
+        setDetails(data || null);
+      } catch {
+        setDetails(null);
       }
-      setDetails(undefined);
-      patients.get(id).then(setDetails);
     };
     fetchDetails();
   }, [id]);
 
+  const missing = "Patient ID is missing from the URL.";
+  const loading = "Loading...";
+  const notFound = "Patient not found.";
+
   if (!id) {
-    return <p>Patient ID is missing from the URL.</p>;
+    return <Typography color="error">{missing}</Typography>;
   } else if (details === undefined) {
-    return <p>Loading…</p>;
+    return <Typography>{loading}</Typography>;
   } else if (details === null) {
-    return <p>Patient not found.</p>;
+    return <Typography color="error">{notFound}</Typography>;
   }
 
-  return <p>Correctly formed id!</p>;
+  return (
+    <Container>
+      <Typography variant="h4">{details.name}</Typography>
+      <Typography>
+        <strong>Gender:</strong> {details.gender}
+      </Typography>
+      <Typography>
+        <strong>SSN:</strong> {details.ssn}
+      </Typography>
+      <Typography>
+        <strong>Occupation:</strong> {details.occupation}
+      </Typography>
+      <Typography>
+        <strong>Date of Birth:</strong> {details.dateOfBirth}
+      </Typography>
+    </Container>
+  );
 };
 
 export default PatientDetailsPage;
