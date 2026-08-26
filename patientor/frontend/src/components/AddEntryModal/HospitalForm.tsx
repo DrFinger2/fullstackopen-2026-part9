@@ -1,28 +1,29 @@
 import { useState, SyntheticEvent } from "react";
 import { Grid, Button, Stack } from "@mui/material";
-import { EntryFormValues } from "../../types";
+import { EntryFormValues, Diagnosis } from "../../types";
+import { diagnosisCodeOptions } from "./options";
 import TextInputField from "../_common/TextInputField";
 import DateInputField from "../_common/DateInputField";
+import MultiSelectInputField from "../_common/MultiSelectInputField";
 
 interface Props {
   onCancel: () => void;
   onSubmit: (values: EntryFormValues) => void;
+  diagnoses: Diagnosis[];
 }
 
-const HospitalForm = ({ onCancel, onSubmit }: Props) => {
+const HospitalForm = ({ onCancel, onSubmit, diagnoses }: Props) => {
   const [date, setDate] = useState("");
   const [specialist, setSpecialist] = useState("");
   const [description, setDescription] = useState("");
   const [dischargeDate, setDischargeDate] = useState("");
   const [dischargeCriteria, setDischargeCriteria] = useState("");
-  const [diagnosisCodes, setDiagnosisCodes] = useState("");
+  const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
 
-    const codes = diagnosisCodes
-      ? diagnosisCodes.split(",").map((c) => c.trim())
-      : undefined;
+    const codes = diagnosisCodes.length > 0 ? diagnosisCodes : undefined;
 
     const discharge = {
       date: dischargeDate,
@@ -65,11 +66,11 @@ const HospitalForm = ({ onCancel, onSubmit }: Props) => {
           set={setDischargeCriteria}
         />
 
-        <TextInputField
+        <MultiSelectInputField
           label="Diagnosis codes"
-          placeholder="comma separated, e.g. Z57.1, M51.2"
           value={diagnosisCodes}
           set={setDiagnosisCodes}
+          options={diagnosisCodeOptions(diagnoses)}
         />
 
         <Grid container justifyContent="space-between" sx={{ marginTop: 2 }}>

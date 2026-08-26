@@ -1,22 +1,25 @@
 import { useState, SyntheticEvent } from "react";
 import { Grid, Button, Stack } from "@mui/material";
-import { EntryFormValues, HealthCheckRating } from "../../types";
+import { EntryFormValues, HealthCheckRating, Diagnosis } from "../../types";
 import { healthCheckRatingOptions } from "./options";
+import { diagnosisCodeOptions } from "./options";
 import TextInputField from "../_common/TextInputField";
 import SelectInputField from "../_common/SelectInputField";
+import MultiSelectInputField from "../_common/MultiSelectInputField";
 import DateInputField from "../_common/DateInputField";
 
 interface Props {
   onCancel: () => void;
   onSubmit: (values: EntryFormValues) => void;
+  diagnoses: Diagnosis[];
 }
 
-const HealthCheckForm = ({ onCancel, onSubmit }: Props) => {
+const HealthCheckForm = ({ onCancel, onSubmit, diagnoses }: Props) => {
   const [date, setDate] = useState("");
   const [specialist, setSpecialist] = useState("");
   const [description, setDescription] = useState("");
   const [healthCheckRating, setHealthCheckRating] = useState("");
-  const [diagnosisCodes, setDiagnosisCodes] = useState("");
+  const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
@@ -25,9 +28,7 @@ const HealthCheckForm = ({ onCancel, onSubmit }: Props) => {
       ? (Number(healthCheckRating) as HealthCheckRating)
       : undefined;
 
-    const codes = diagnosisCodes
-      ? diagnosisCodes.split(",").map((c) => c.trim())
-      : undefined;
+    const codes = diagnosisCodes.length > 0 ? diagnosisCodes : undefined;
 
     onSubmit({
       type: "HealthCheck",
@@ -62,11 +63,11 @@ const HealthCheckForm = ({ onCancel, onSubmit }: Props) => {
           disabledOption={{ value: "", label: "Select a rating" }}
         />
 
-        <TextInputField
+        <MultiSelectInputField
           label="Diagnosis codes"
-          placeholder="comma separated, e.g. Z57.1, M51.2"
           value={diagnosisCodes}
           set={setDiagnosisCodes}
+          options={diagnosisCodeOptions(diagnoses)}
         />
 
         <Grid container justifyContent="space-between" sx={{ marginTop: 2 }}>

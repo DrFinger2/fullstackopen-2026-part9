@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Stack } from "@mui/material";
-import { ENTRY_TYPES, EntryFormValues, EntryType } from "../../types";
+import { ENTRY_TYPES, EntryType } from "../../types";
+import { EntryFormValues, Diagnosis } from "../../types";
 import { entryTypeOptions } from "./options";
 import SelectInputField from "../_common/SelectInputField";
 import HealthCheckForm from "./HealthCheckForm";
@@ -10,22 +11,40 @@ import HospitalForm from "./HospitalForm";
 interface Props {
   onCancel: () => void;
   onSubmit: (values: EntryFormValues) => void;
+  diagnoses: Diagnosis[];
 }
 
-const AddEntryForm = ({ onCancel, onSubmit }: Props) => {
+const AddEntryForm = ({ onCancel, onSubmit, diagnoses }: Props) => {
   const [entryType, setEntryType] = useState<EntryType>(
     ENTRY_TYPES.HealthCheck,
   );
 
-  // It is what it is, solution sucks but couldnt come up with anything better either
   const renderForm = () => {
     switch (entryType) {
       case ENTRY_TYPES.HealthCheck:
-        return <HealthCheckForm onCancel={onCancel} onSubmit={onSubmit} />;
+        return (
+          <HealthCheckForm
+            onCancel={onCancel}
+            onSubmit={onSubmit}
+            diagnoses={diagnoses}
+          />
+        );
       case ENTRY_TYPES.OccupationalHealthcare:
-        return <OccupationalForm onCancel={onCancel} onSubmit={onSubmit} />;
+        return (
+          <OccupationalForm
+            onCancel={onCancel}
+            onSubmit={onSubmit}
+            diagnoses={diagnoses}
+          />
+        );
       case ENTRY_TYPES.Hospital:
-        return <HospitalForm onCancel={onCancel} onSubmit={onSubmit} />;
+        return (
+          <HospitalForm
+            onCancel={onCancel}
+            onSubmit={onSubmit}
+            diagnoses={diagnoses}
+          />
+        );
       default:
         return null;
     }

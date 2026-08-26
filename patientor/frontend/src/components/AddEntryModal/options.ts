@@ -1,4 +1,4 @@
-import { HealthCheckRating, ENTRY_TYPES } from "../../types";
+import { HealthCheckRating, Diagnosis, ENTRY_TYPES } from "../../types";
 
 export const healthCheckRatingOptions = [
   { value: String(HealthCheckRating.Healthy), label: "0 - Healthy" },
@@ -11,3 +11,9 @@ export const entryTypeOptions = Object.values(ENTRY_TYPES).map((type) => ({
   value: type,
   label: type,
 }));
+
+export const diagnosisCodeOptions = (diagnoses: Diagnosis[]) =>
+  diagnoses.map((diagnosis) => ({
+    value: diagnosis.code,
+    label: `${diagnosis.code} - ${diagnosis.name}`,
+  }));

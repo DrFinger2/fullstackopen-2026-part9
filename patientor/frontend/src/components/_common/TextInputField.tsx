@@ -17,7 +17,6 @@ const TextInputField = ({
   label,
   value,
   set,
-
   placeholder = "",
   fullWidth = true,
   type = "text",

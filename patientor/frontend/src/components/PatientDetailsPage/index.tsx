@@ -67,6 +67,7 @@ const PatientDetailsPage = () => {
       </Button>
 
       <AddEntryModal
+        diagnoses={diagnoses}
         modalOpen={modalOpen}
         onSubmit={submitEntry}
         error={submitError}
