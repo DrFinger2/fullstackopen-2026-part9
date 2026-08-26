@@ -1,12 +1,15 @@
 import { useParams } from "react-router-dom";
-import type { Patient } from "../../types";
+import type { PatientDetails } from "../../types";
 import patients from "../../services/patients";
 import { useEffect, useState } from "react";
 import { Container, Typography } from "@mui/material";
+import Entries from "./Entries";
 
 const PatientDetailsPage = () => {
   const { id } = useParams();
-  const [details, setDetails] = useState<Patient | null | undefined>(undefined);
+  const [details, setDetails] = useState<PatientDetails | null | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -51,6 +54,7 @@ const PatientDetailsPage = () => {
       <Typography>
         <strong>Date of Birth:</strong> {details.dateOfBirth}
       </Typography>
+      {details.entries && <Entries entries={details.entries} />}
     </Container>
   );
 };

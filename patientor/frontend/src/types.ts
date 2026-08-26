@@ -19,11 +19,53 @@ export interface Patient {
   dateOfBirth?: string;
 }
 
-// placeholder for now, same as backend
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface Entry {}
+export type PatientFormValues = Omit<Patient, "id" | "entries">;
+
+export enum HealthCheckRating {
+  Healthy = 0,
+  LowRisk = 1,
+  HighRisk = 2,
+  CriticalRisk = 3,
+}
+
+interface Discharge {
+  date: string;
+  criteria: string;
+}
+interface SickLeave {
+  startDate: string;
+  endDate: string;
+}
+
+interface BaseEntry {
+  id: string;
+  description: string;
+  date: string;
+  specialist: string;
+  diagnosisCodes?: Array<Diagnosis["code"]>;
+}
+
+export interface HealthCheckEntry extends BaseEntry {
+  type: "HealthCheck";
+  healthCheckRating: HealthCheckRating;
+}
+
+export interface HospitalEntry extends BaseEntry {
+  type: "Hospital";
+  discharge: Discharge;
+}
+
+export interface OccupationalHealthcareEntry extends BaseEntry {
+  type: "OccupationalHealthcare";
+  employerName: string;
+  sickLeave?: SickLeave;
+}
+
+export type Entry =
+  | HospitalEntry
+  | OccupationalHealthcareEntry
+  | HealthCheckEntry;
 
 export interface PatientDetails extends Patient {
   entries: Entry[];
 }
-export type PatientFormValues = Omit<Patient, "id" | "entries">;
